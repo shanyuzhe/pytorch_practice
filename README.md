@@ -1,3 +1,3 @@
-#刘二 pytorch深度学习实践课程
+﻿# 刘二 PyTorch深度学习实践课程
 
-##Kaggle_Minist 与 kaggle_titannic为课后实践作业
+## Kaggle_Mnist 与 Kaggle_Titanic 为课后实践作业。
