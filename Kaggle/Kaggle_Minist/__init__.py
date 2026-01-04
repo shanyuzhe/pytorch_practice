@@ -3,7 +3,10 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
-from net.cnn_net1 import CNN_Net1 as Net
+#from net.cnn_google_net import Net
+#from net.CNN_Net1 import CNN_Net1 
+from net.residual_net import Net
+import os
 
 # --- 配置 ---
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -43,7 +46,18 @@ def main():
         acc_list.append(acc)
 
     # 4. 保存与绘图
-    torch.save(model.state_dict(), 'best_mnist.pth')
+    
+    # # 确保文件夹存在（如果没有就自动创建）
+    # if not os.path.exists('checkpoints'):
+    #     os.makedirs('checkpoints')
+
+    # # 保存到指定文件夹
+    # save_path = os.path.join('checkpoints', 'best_mnist.pth')
+    # torch.save(model.state_dict(), save_path)
+    # print(f"模型已保存至: {save_path}")
+            
+    
+    
     #model.state_dict意思是只保存模型参数，不保存整个模型结构
     plot_result(epoch_list, acc_list)
 
