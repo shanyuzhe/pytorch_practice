@@ -103,7 +103,7 @@ from torch_playground import *
 导入时会自动执行：
 
 1. **自动选择设备**：优先使用 CUDA，将结果存入全局变量 `DEVICE`。
-2. **固定随机种子**：默认种子 `42`，涵盖 CPU、GPU、NumPy 和 Python 原生随机库，并配置 cuDNN 为确定性模式。
+2. **固定随机种子**：默认种子 `277527`，涵盖 CPU、GPU、NumPy 和 Python 原生随机库，并配置 cuDNN 为确定性模式。
 
 ### 核心功能展示
 
