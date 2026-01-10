@@ -83,7 +83,7 @@ PYTORCH_PRACTICE/
 
 遇到报错、Loss 不下降或维度对不上时，请优先查阅 `utils` 目录下的检查清单：
 
-👉 **[点击查看 PyTorch Debug Checklist](https://www.google.com/search?q=./utils/debug_checklist.md)**
+👉 **[点击查看 PyTorch Debug Checklist](./utils/debug_checklist.md)**
 
 ---
 
@@ -161,7 +161,7 @@ data = data.to(DEVICE)
 
 ### 📝 Debug 检查清单
 
-遇到报错或 Loss 异常时，请对照 [utils/debug_checklist.md](https://www.google.com/search?q=./utils/debug_checklist.md) 进行排查。
+遇到报错或 Loss 异常时，请对照 [utils/debug_checklist.md](./utils/debug_checklist.md) 进行排查。
 
 ```
 
