@@ -13,7 +13,7 @@
 ## 📂 项目结构 (Project Structure)
 
 ```text
-PYTORCH_PRACTICE/
+AI_FULLSTACK/
 ├── 📜 .env                  # [关键] 环境变量配置 (PYTHONPATH=.)
 ├── 📂 28days_challenges/    # 🔥 PyTorch 深度学习进阶代码
 ├── 📂 python_gym/           # 🐍 Python 算法与数据结构特训 (New!)
