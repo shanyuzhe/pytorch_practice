@@ -1,230 +1,178 @@
-﻿
+﻿>#大模型开发工程师进阶路线图 (Hardcore Mode)
+ **Warning**: 此路线图不包含任何“速成”或“科普”内容。目标是达到工业界核心研发岗（DeepSeek/OpenAI）的入职门槛。每日预计投入 8-10 小时。
+> 
 
-```markdown
-# 🚀 PyTorch 深度学习 & Python 算法双修实战
-# 作者：SanN1Z
-> **目标**：以**工程化**的思维构建深度学习知识体系（PyTorch），同时夯实编程内功（Python 算法），最终具备手写 Transformer 和独立解决复杂工程问题的能力。
+## 🎯 核心竞争力 Checkbox
 
-这是我的个人全栈 AI 学习仓库。本项目采用**双线程**学习模式：
-1. 🔥 **PyTorch 主线**：结合《PyTorch深度学习实践》与 Kaggle 实战，从 Tensor 基础到 LLM 实现。
-2. 🐍 **Python 支线**：系统性训练数据结构与算法，提升代码的 **"Pythonic"** 程度与运行效率。
+*(每阶段结束必须通过的自测题)*
 
----
-
-## 📂 项目结构 (Project Structure)
-
-```text
-AI_FULLSTACK/
-├── 📜 .env                    # [关键] 环境变量配置 (PYTHONPATH=.)
-├── 📂 28days_challenges/      # 🔥 PyTorch 深度学习进阶代码
-│   └── 📂 Self-made experimental/  # 🧪 每日核心概念手写实验与复盘笔记 (.md)
-├── 📂 python_gym/             # 🐍 Python 算法与数据结构特训
-│   ├── 📜 templates.py        # 刷题常用模板 (I/O, 二分, 堆等)
-│   └── ...
-├── 📂 lecture/                # 刘二大人《PyTorch深度学习实践》课程代码
-├── 📂 kaggle/                 # Kaggle 实战演练 (Titanic, MNIST 等)
-├── 📂 utils/                  # 🛠️ 通用工具箱 (两个计划通用)
-│   ├── 📜 __init__.py         # 标识 utils 为 Python 包
-│   ├── 📜 torch_playground.py # 核心工具：环境配置、计时、张量体检
-│   └── 📜 debug_checklist.md  # 🚑 救命指南：Debug 检查清单
-└── 📜 README.md               # 项目说明文档
-
-```
-
-## 🌟 核心模块说明
-
-### 🔥 1. PyTorch 28 Days Challenges
-
-> **定位**：深度学习核心概念的**手写代码实验**与**底层逻辑复盘**。
-
-此处不仅仅是运行代码，而是通过 `Self-made experimental` 中的实验笔记，记录对 Broadcast、Softmax、Backprop 等核心机制的**数学推导**与**代码验证**，拒绝“调包侠”，追求“知其所以然”。
-
-### 🐍 2. Python Gym
-
-> **定位**：算法训练场。
-
-针对 AI 工程师必须掌握的数据结构（如堆、图、树）进行专项训练，重点关注代码的**向量化思维**与**时间复杂度优化**。
-
-### 🛠️ 3. Engineering Utils
-
-> **定位**：工程化基础设施。
-
-包含通用的环境检测、性能计时器与 Debug 检查清单，培养规范的工程开发习惯。
+- [ ]  **Math**: 能否手推 Softmax 的 Jacobian 矩阵？能否证明 KL 散度非负？
+- [ ]  **Arch**: 能否徒手写出 RoPE 的旋转矩阵并解释其远程衰减特性？
+- [ ]  **Sys**: 能否解释 ZeRO-3 相比 ZeRO-2 多切分了什么？通信量有何变化？
+- [ ]  **CUDA**: 能否用 Triton 写一个简单的 Vector Add 或 Softmax 算子？
+- [ ]  **KvCache**: 为什么 PagedAttention 能解决显存碎片化？Block Table 是怎么维护的？
 
 ---
 
-## 🛠️ 环境快速启动 (Quick Start)
+## 📅 Stage 1: Foundation & Math (彻底打通底层)
 
-为了避免 `ModuleNotFoundError` 并确保 `utils` 库能在所有子文件夹中被正确调用，请务必执行以下配置：
+**Goal**: 能够不依赖 PyTorch Autograd 手写神经网络反向传播。
 
-1. **配置环境变量 (.env)**
-在项目根目录下新建名为 `.env` 的文件，写入以下内容以声明项目根路径：
-```properties
-PYTHONPATH=.
+### 1.1 硬核数学 (Math for DL)
 
-```
+- **重点**: 矩阵微积分 (Matrix Calculus)、信息论。
+- **资料**:
+    - Paper: *The Matrix Calculus You Need For Deep Learning* (Parr & Howard).
+    - Concept: Jacobian, Hessian, KL Divergence, Cross Entropy vs MSE.
+- **Task**:
+    - [ ]  手推 Transformer 中 Multi-Head Attention 的反向传播梯度。
 
+### 1.2 深度 NLP 基础 (CS224N)
 
-*(或者直接在终端运行：`echo "PYTHONPATH=." > .env`)*
-2. **配置 VS Code (关键)**
-为了让 IDE 终端自动加载环境变量，请创建/修改 `.vscode/settings.json` 并添加：
-```json
-{
-    "python.envFile": "${workspaceFolder}/.env"
-}
+- **课程**: **Stanford CS224n: Natural Language Processing with Deep Learning**
+- **重点**: Word2Vec, RNN/LSTM/GRU (理解序列建模的历史), Attention Mechanism.
+- **Task**:
+    - [ ]  完成 Assignment 3 (Dependency Parsing) & Assignment 4 (NMT with Attention).
 
-```
+### 1.3 系统雏形 (Build Micrograd)
 
-
-3. **运行实验**
-```bash
-# 此时可在任意目录下引用 utils 包
-python utils/torch_playground.py
-
-```
-
-
+- **项目**: 参考 Karpathy 的 `micrograd`，但用 Python + NumPy 实现一个支持 Tensor 的 Autograd 引擎。
+- **Task**:
+    - [ ]  实现 `Tensor` 类，支持 `matmul`, `conv2d` 的 `backward`。
+    - [ ]  用你写的引擎训练一个 MLP 拟合 `sin(x)`。
 
 ---
 
-> *Keep Coding, Keep Learning.*
+## 📅 Stage 2: Architecture & Systems (Llama from Scratch)
 
-```
+**Goal**: 徒手复现 Llama 架构，并理解分布式训练原理。
 
-```
+### 2.1 架构拆解 (CS336)
 
----
+- **课程**: **Stanford CS336: Language Modeling from Scratch** (最硬核，必看)
+- **重点**: Pre-training, Post-training, Scaling Laws.
+- **组件手撸**:
+    - [ ]  **RoPE**: 旋转位置编码 (Rotary Positional Embeddings).
+    - [ ]  **SwiGLU**: 激活函数实现与导数。
+    - [ ]  **RMSNorm**: 相比 LayerNorm 的区别与实现。
+    - [ ]  **GQA/MQA**: Grouped Query Attention 代码实现。
 
-## 📅 路线图 A：PyTorch 深度学习 (28 Days)
+### 2.2 分布式训练基础 (3D Parallelism)
 
-> **核心目标**：独立写出训练闭环，掌握 Debug 技巧，手写 Transformer。
+- **理论**: Data Parallelism (DP), Tensor Parallelism (TP), Pipeline Parallelism (PP).
+- **论文**: *Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism*.
+- **Task**:
+    - [ ]  阅读 DeepSpeed ZeRO Paper (ZeRO-1/2/3 的区别).
+    - [ ]  在单机多卡环境配置 `torch.distributed.launch`，跑通 DDP 训练。
 
-### Week 1: 维度直觉与张量操作
+### 2.3 显存优化 (FlashAttention)
 
-* [x] **Day 0**: 🛠️ 环境搭建与 utils 工具库封装
-* [x] **Day 1**: Tensor 基础 + Device 管理 (CPU/GPU)
-* [x] **Day 2**: 维度变换大通关 (reshape/view/permute)
-* [x] **Day 3**: 广播机制 (Broadcasting) 深度解析
-* [x] **Day 4**: 高级索引 (Advanced Indexing) & Mask
-* [x] **Day 5**: Einsum 爱因斯坦求和约定
-* [ ] **Day 6**: NumPy 与 PyTorch 的互转陷阱
-* [ ] **Day 7**: 🔄 **复盘**：输出维度变换速查表
-
-### Week 2: 自动化梯度与训练闭环
-
-* [ ] **Day 8**: Autograd 机制 (requires_grad, detach)
-* [ ] **Day 9**: Loss 函数的输入细节 (Shape/Dtype)
-* [ ] **Day 10**: Optimizer 与梯度管理 (zero_grad, clip_grad)
-* [ ] **Day 11**: Train/Eval 模式的副作用 (Dropout/BN)
-* [ ] **Day 12**: DataLoader 与 Dataset 自定义
-* [ ] **Day 13**: 模型保存、加载与断点续训
-* [ ] **Day 14**: 🔄 **复盘**：输出最小可运行训练模板
-
-### Week 3: Debug 技巧与性能优化
-
-* [ ] **Day 15**: NaN / Loss 爆炸的定位与修复
-* [ ] **Day 16**: 显存管理与 Batch Size 调优
-* [ ] **Day 17**: 混合精度训练 (AMP) 初探
-* [ ] **Day 18**: DataLoader 加速 (num_workers)
-* [ ] **Day 19**: 简单的性能分析 (Profiling)
-* [ ] **Day 20**: 综合排错演练
-* [ ] **Day 21**: 🔄 **复盘**：完善 `debug_checklist.md`
-
-### Week 4: 对齐 LLM 项目 (Transformer)
-
-* [ ] **Day 22**: Embedding + Positional Encoding
-* [ ] **Day 23**: Self-Attention 实现 (Q, K, V)
-* [ ] **Day 24**: Transformer Block (ResNet + LayerNorm)
-* [ ] **Day 25**: 语言模型 (LM) 训练闭环
-* [ ] **Day 26**: 理论面试题准备
-* [ ] **Day 27**: 🎓 **验收**：手写最小 LM 并解释 Tensor Shape
-* [ ] **Day 28**: 🎉 **总复盘**
+- **理论**: IO-Awareness, Tiling, Recomputation.
+- **论文**: *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*.
+- **Task**:
+    - [ ]  阅读 FlashAttention V1/V2 源码 (CUDA/Triton 部分).
+    - [ ]  **入门 Triton**: 用 OpenAI Triton 写一个简单的矩阵乘法算子。
 
 ---
 
-## 📅 路线图 B：Python 算法健身房 (Python Gym)
+## 📅 Stage 3: Full-stack LLM & Research (全栈实战)
 
-> **核心目标**：提升代码“手感”与运行效率，积累常用算法模板。
-> **每日标准**：AC 2 题 + 3 行复盘总结 + 维护 `templates.py`。
+**Goal**: 训练 Tiny-Llama 并复现 R1 推理策略。
 
-### Week 1: Collections 模块特训 (手感拉满)
+### 3.1 Pre-train & SFT Pipeline
 
-* [x] **Day 1**: Counter (频次统计/异位词)
-* [x] **Day 2**: defaultdict (分组/建图技巧)
-* [x] **Day 3**: deque (队列/BFS/滑窗) —— *使用 `time_block` 验证 O(1) 优势*
-* [ ] **Day 4**: 排序技巧 (sorted key/lambda/元组)
-* [ ] **Day 5**: 综合小测 (Collections 混用)
-* [ ] **Day 6**: 错题回炉 + 模板固化
-* [ ] **Day 7**: 补齐遗漏点
+- **项目**: 从零构建 `min-llama` (参考 `lit-gpt` 或 `nanoGPT`).
+- **数据**: 使用 `TinyStories` 数据集训练一个 15M-50M 参数的模型。
+- **Task**:
+    - [ ]  实现完整的 Pre-training Loop (WandB 监控 Loss, Grad Norm).
+    - [ ]  实现 SFT (Supervised Fine-Tuning) 流程，使用 Alpaca 格式数据微调。
 
-### Week 2: Itertools 与 基础算法
+### 3.2 Alignment (RLHF/DPO)
 
-* [ ] **Day 8**: itertools 基础 (product/permutations)
-* [ ] **Day 9**: groupby 思想 (数据压缩/连续段)
-* [ ] **Day 10**: heapq (TopK/最小堆/模拟)
-* [ ] **Day 11**: bisect (二分查找/维护有序序列)
-* [ ] **Day 12**: 综合训练 (堆 + 二分)
-* [ ] **Day 13**: 速度训练 (60分钟限时)
-* [ ] **Day 14**: 整理堆与二分模板
+- **课程**: **Berkeley CS285** (选修 RL 基础部分) 或直接看 DPO 论文.
+- **论文**: *Direct Preference Optimization: Your Language Model is Secretly a Reward Model*.
+- **Task**:
+    - [ ]  在你的 Tiny-Llama 上实现 DPO Loss。
+    - [ ]  对比 SFT 模型与 DPO 模型的输出差异。
 
-### Week 3: 函数式编程与性能优化
+### 3.3 推理与推理优化 (Inference)
 
-* [ ] **Day 15**: 迭代器与生成器 (Yield/Map/Filter)
-* [ ] **Day 16**: functools (lru_cache 记忆化搜索)
-* [ ] **Day 17**: 快速 I/O 与常数优化 (sys.stdin)
-* [ ] **Day 18**: 字符串与解析专项
-* [ ] **Day 19**: 图/树模板巩固 (BFS/DFS)
-* [ ] **Day 20**: 综合限时 (90分钟)
-* [ ] **Day 21**: 产出“常用库速查表”
-
-### Week 4: 稳定性与模拟面试
-
-* [ ] **Day 22**: 双指针/滑窗专题
-* [ ] **Day 23**: 二分查找专题
-* [ ] **Day 24**: 单调栈/队列专题
-* [ ] **Day 25**: 堆/TopK 专题
-* [ ] **Day 26**: DP 动态规划入门
-* [ ] **Day 27**: 模拟面试 (口播思路)
-* [ ] **Day 28**: 统计错题与下阶段规划
+- **策略**: DeepSeek-R1 的冷启动策略 (Cold Start).
+    - **Concept**: Chain of Thought (CoT), Reasoning Tokens.
+    - **Task**: 构造一个简单的 CoT 数据集 (Math word problems)，微调你的模型，观察是否出现"思考过程"。
+- **系统**: **vLLM & PagedAttention**.
+    - **Task**: 阅读 vLLM 源码，理解 Block Manager 如何管理 KV Cache 物理块与逻辑块的映射。
 
 ---
 
-## 🛠️ 工具库使用说明 (utils/torch_playground.py)
+---
 
-`utils` 库不仅服务于 PyTorch，其中的计时器和环境配置对 Python 算法练习同样有效。
+# 🪜 Stage 1: Daily Execution Plan (Start Now)
 
-**导入方式 (确保已配置 .env)：**
+> **Execution Rule**: 每天核心 4 小时深度工作（不包含看视频发呆的时间）。Talk is cheap, show me the code.
+> 
 
-```python
-from utils.torch_playground import *
+## Week 1: 重新发明轮子 (Autograd & Backprop)
 
-```
+目标：彻底祛魅 PyTorch。不依赖 `.backward()` 手写神经网络训练。
 
-### 核心功能
-
-#### 1. `time_block(label)` —— 算法效率对比神器
-
-在 Python 刷题时，用它来对比不同写法的速度差异（例如 list vs deque）。
-
-```python
-# 验证 list 在头部插入的性能劣势
-with time_block("List Insert"):
-    arr.insert(0, x) 
-
-# 验证 deque 的 O(1) 优势
-with time_block("Deque AppendLeft"):
-    deq.appendleft(x)
-
-```
-
-#### 2. `inspect(tensor)` —— PyTorch 调试
-
-查看 Tensor 的 Shape, Dtype, Device 和 Grad 状态。
+- [ ]  **Day 1: 矩阵微积分 (Matrix Calculus)**
+    - **Input**: 阅读 *The Matrix Calculus You Need For Deep Learning* (Parr & Howard) 前 3 章。
+    - **Code**: 手推 $Y = WX + b$ 和 Softmax 的 Jacobian 矩阵。
+    - **Output**: 在纸上写出 CrossEntropyLoss 对 Logits 的梯度推导过程（你会发现它惊人的简单：$P - Y$）。
+- [ ]  **Day 2: Micrograd (Scalar Autograd)**
+    - **Input**: Andrej Karpathy 的 YouTube 视频 *"The spelled-out intro to neural networks..."*
+    - **Code**: 跟写 `micrograd`。实现 `Value` 类，支持 `+`, `*`, `pow`, `relu`。
+    - **Output**: 用你的引擎训练一个 MLP 拟合 `f(x) = 3x^2 - 4x + 5`。
+- [ ]  **Day 3: Tensor Autograd (NumPy Edition)**
+    - **Task**: 将 Micrograd 升级为张量版本。
+    - **Code**: 实现 `Tensor` 类。难点：处理 `matmul` 的反向传播（注意转置和形状匹配）。
+    - **Check**: 你的 `tensor.grad` 必须和 PyTorch 的结果完全一致（`torch.allclose`）。
+- [ ]  **Day 4: 神经网络层 (Layers)**
+    - **Code**: 基于 Day 3 的 Tensor，实现 `Linear`, `ReLU`, `Sequential`。
+    - **Task**: 实现 SGD 优化器 (`step`, `zero_grad`)。
+    - **Output**: 跑通 MNIST 手写数字识别（Acc > 90%）。
+- [ ]  **Day 5: 卷积与池化 (Hard Mode)**
+    - **Theory**: 理解 Convolution 是矩阵乘法的稀疏形式 (Toeplitz Matrix)。
+    - **Code**: 手写 `im2col` (Image to Column) 实现高效卷积。
+    - **Output**: 在你的引擎中添加 `Conv2d` 层。
+- [ ]  **Day 6: 初始化与归一化 (Init & Norm)**
+    - **Theory**: 为什么需要 Xavier/Kaiming 初始化？BatchNorm 的 $\gamma, \beta$ 怎么求导？
+    - **Code**: 手写 `BatchNorm1d` 的 forward 和 backward。
+    - **Check**: 观察加了 BN 后 Loss 下降速度的变化。
+- [ ]  **Day 7: Week 1 复盘 (Code Review)**
+    - **Self-Review**: 对比你的 Autograd 和 PyTorch 源码 (C++层面不用看，看逻辑)。
+    - **Output**: 整理一篇笔记 "PyTorch Autograd 的 5 个设计细节"。
 
 ---
 
-## 🚑 Debug 快速通道
+## Week 2: 序列建模与 Attention (NLP Foundation)
 
-遇到报错、Loss 不下降或维度对不上时，请优先查阅：
-👉 **[点击查看 PyTorch Debug Checklist](./utils/debug_checklist.md)**
+目标：手搓 Transformer 组件，为 Stage 2 做铺垫。
 
+- [ ]  **Day 8: Word2Vec & Embedding**
+    - **Theory**: Skip-gram vs CBOW。
+    - **Code**: 用 `torch.einsum` 实现 Skip-gram 的负采样 Loss。
+    - **Check**: 训练后，`King - Man + Woman` 真的等于 `Queen` 吗？
+- [ ]  **Day 9: RNN/LSTM 及其反向传播**
+    - **Theory**: BPTT (Backprop Through Time) 的梯度消失/爆炸问题。
+    - **Code**: 手写一个单层 RNN 训练字符级语言模型 (Char-RNN)。
+    - **Check**: 梯度截断 (Gradient Clipping) 的代码实现。
+- [ ]  **Day 10: Attention Is All You Need (Part 1)**
+    - **Reading**: 原论文精读。理解 Query, Key, Value 的物理含义（数据库检索视角）。
+    - **Math**: 为什么除以 $sqrt{d_k}$？（推导方差变化）。
+    - **Code**: 实现 `ScaledDotProductAttention`。
+- [ ]  **Day 11: Multi-Head Attention (MHA)**
+    - **Code**: 实现 MHA。注意 `transpose` 和 `view` 的操作顺序（Day 2 笔记的内容！）。
+    - **Task**: 实现 Causal Mask (用于 GPT 解码)。
+- [ ]  **Day 12: Transformer Block**
+    - **Code**: 拼装 `MHA`, `LayerNorm`, `FFN`。实现 Residual Connection。
+    - **Task**: 理解 Pre-Norm vs Post-Norm 的区别（DeepSeek/Llama 全是用 Pre-Norm，为什么？）。
+- [ ]  **Day 13: Positional Encoding (PE)**
+    - **Code**: 实现 Sinusoidal PE (绝对位置编码)。
+    - **Math**: 证明 Sinusoidal PE 具有相对位置性质（线性变换）。
+    - **Preview**: 预习 RoPE (旋转位置编码)，这是现在的标配。
+- [ ]  **Day 14: Week 2 复盘 (Mini-Project)**
+    - **Project**: **NanoGPT (Part 1)**。
+    - **Task**: 复现 Karpathy 的 `nanoGPT` 代码，在莎士比亚数据集上训练一个小型 Transformer。
+    - **Goal**: Loss 降到 1.5 以下，能生成像样的伪莎士比亚戏剧。
